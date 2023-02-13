@@ -19,7 +19,7 @@ export default abstract class Vehicle<T> {
     this.model = models[this.modelName] || model(this.modelName, this.schema);
   }
 
-  public create(obj: T) {
+  public create(obj: Omit<T, 'id'>) {
     return this.model.create({ ...obj });
   }
 
