@@ -6,12 +6,12 @@ export default class CarODM extends Vehicle<ICar> {
   constructor() {
     const schema = new Schema<ICar>({
       model: { type: String, required: true },
-      year: { tyep: Number, required: true },
+      year: { type: Number, required: true },
       color: { type: String, required: true },
       status: { type: Boolean, required: true },
-      buyValue: { tyep: Number, required: true },
-      doorsQty: { tyep: Number, required: true },
-      seatsQty: { tyep: Number, required: true },
+      buyValue: { type: Number, required: true },
+      doorsQty: { type: Number, required: true },
+      seatsQty: { type: Number, required: true },
     });
     super(schema, 'Car');
   }
