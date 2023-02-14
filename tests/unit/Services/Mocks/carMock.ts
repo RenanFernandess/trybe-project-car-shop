@@ -2,7 +2,7 @@ export const carBodyMock = {
   model: 'Marea xablau',
   year: 2002,
   color: 'Black-white',
-  status: false,
+  status: true,
   buyValue: 15.990,
   doorsQty: 4,
   seatsQty: 5,
@@ -10,8 +10,13 @@ export const carBodyMock = {
 
 const createdMock = {
   ...carBodyMock,
-  _id: '63ebe8447220ca4cc0b49825',
+  id: '63ebe8447220ca4cc0b49825',
   __v: 0,
+};
+
+export const createResultMock = {
+  ...carBodyMock,
+  id: '63ebe8447220ca4cc0b49825',
 };
 
 export default createdMock;
@@ -32,3 +37,14 @@ export const findAllMock = [
 ];
 
 export const findByIdMock = createdMock;
+
+export const carAttributes = [
+  'id',
+  'model',
+  'year',
+  'color',
+  'status',
+  'buyValue',
+  'doorsQty',
+  'seatsQty',
+];
