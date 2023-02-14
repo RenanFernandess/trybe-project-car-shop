@@ -1,6 +1,8 @@
 import ICar from '../Interfaces';
 import CarODM from '../Models/CarODM';
 import Car from '../Domains/Car';
+import HttpError from '../Errors';
+import NOT_FOUND from '../Errors/Messages';
 
 export default class CarService {
   private _model: CarODM;
@@ -8,17 +10,24 @@ export default class CarService {
     this._model = new CarODM();
   }
 
-  public createCarDomian(car: ICar | null) {
-    if (car) {
-      return new Car(car);
-    }
-    return null;
+  private _createCarDomian(car: ICar | null) {
+    return (car) ? new Car(car) : null;
   }
 
   public async create({ status, ...car }: Omit<ICar, 'id'>) {
     const newCar = await this._model.create({ status: status || false, ...car });
-    // console.log(newCar);
-  
-    return this.createCarDomian(newCar);
+    return this._createCarDomian(newCar);
+  }
+
+  public async findAll() {
+    const cars = await this._model.findAll();
+    if (!cars.length) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
+    return cars.map((car) => this._createCarDomian(car));
+  }
+
+  public async findById(id: string) {
+    const car = await this._model.findById(id);
+    if (!car) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
+    return this._createCarDomian(car);
   }
 }
