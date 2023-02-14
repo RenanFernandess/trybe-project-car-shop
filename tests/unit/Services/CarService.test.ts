@@ -104,4 +104,12 @@ describe('Testa a CarService', function () {
       }
     },
   );
+
+  it('Verifica se o createCarDomian retorna null caso receba null ou undefined', async function () {
+    sinon.stub(Model, 'create').resolves(null);
+
+    const result = await new CarService().create(carBodyMock);
+
+    expect(result).to.be.deep.equal(null);
+  });
 });
