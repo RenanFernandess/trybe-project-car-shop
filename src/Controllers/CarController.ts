@@ -6,19 +6,35 @@ export default class CarController {
     private _sevice: CarService,
   ) {}
 
-  public async create({ body }: Request, res: Response, _next: NextFunction) {
+  public async create({ body }: Request, res: Response, next: NextFunction) {
     const {
-      model,
-      year,
-      color,
-      status,
-      buyValue,
-      doorsQty,
-      seatsQty,
-    } = body;
-    const car = await this._sevice.create({
       model, year, color, status, buyValue, doorsQty, seatsQty,
-    });
-    res.status(201).json(car);
-  } 
+    } = body;
+    try {
+      const car = await this._sevice.create({
+        model, year, color, status, buyValue, doorsQty, seatsQty,
+      });
+      return res.status(201).json(car);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  public async findAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const cars = await this._sevice.findAll();
+      return res.status(200).json(cars);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  public async findById({ params: { id } }: Request, res: Response, next: NextFunction) {
+    try {
+      const car = await this._sevice.findById(id);
+      return res.status(200).json(car);
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
