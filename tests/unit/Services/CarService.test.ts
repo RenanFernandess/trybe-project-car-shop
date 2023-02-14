@@ -61,7 +61,22 @@ describe('Testa a CarService', function () {
   });
 
   it(
-    `Verifica se findById retorna um error com status 404 e message "Car not found",
+    `Verifica se findById lança um error com status 422 e message "Invalid mongo id",
+     caso o formato do Id seja invalido.`,
+    async function () {
+      sinon.stub(Model, 'findById').resolves(null);
+
+      try {
+        await new CarService().findById('invalidId');
+      } catch (error) {
+        expect((error as HttpError).status).to.be.equal(422);
+        expect((error as HttpError).message).to.be.equal('Invalid mongo id');
+      }
+    },
+  );
+
+  it(
+    `Verifica se findById lança um error com status 404 e message "Car not found",
      caso nenhum carro seja encontrado.`,
     async function () {
       sinon.stub(Model, 'findById').resolves(null);
