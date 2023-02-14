@@ -7,7 +7,7 @@ import {
   isValidObjectId,
 } from 'mongoose';
 import HttpError from '../Errors';
-import NOT_FOUND from '../Errors/Messages';
+import { UNPROCESSABLE_ENTITY } from '../Errors/Messages';
 
 export default abstract class Vehicle<T> {
   protected model: Model<T>;
@@ -24,12 +24,21 @@ export default abstract class Vehicle<T> {
   }
 
   public update(_id: string, obj: Partial<T>) {
-    if (isValidObjectId(_id)) throw new HttpError(404, NOT_FOUND.INVALID_ID);
+    if (!isValidObjectId(_id)) throw new HttpError(422, UNPROCESSABLE_ENTITY.MONGO_ID);
 
     return this.model.findByIdAndUpdate(
       { _id },
       { ...obj } as UpdateQuery<T>,
       { new: true },
     );
+  }
+
+  public findAll() {
+    return this.model.find();
+  }
+
+  public findById(_id: string) {
+    if (!isValidObjectId(_id)) throw new HttpError(422, UNPROCESSABLE_ENTITY.MONGO_ID);
+    return this.model.findById(_id);
   }
 }
