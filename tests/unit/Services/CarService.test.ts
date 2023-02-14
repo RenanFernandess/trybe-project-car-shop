@@ -26,6 +26,21 @@ describe('Testa a CarService', function () {
     expect(result).to.be.deep.equal(createdMock);
   });
 
+  it(
+    'Verifica se é pocivel criar um carro como sucesso caso o status recebido seja undefind.',
+    async function () {
+      const createdMocStatusFalse = { ...createdMock, status: false };
+      const { status, ...body } = carBodyMock;
+
+      sinon.stub(Model, 'create').resolves(createdMocStatusFalse);
+
+      const result = await new CarService().create(body);
+
+      expect(result).to.be.has.all.keys(carAttributes);
+      expect(result).to.be.deep.equal(createdMocStatusFalse);
+    },
+  );
+
   it('Verifica se findAll retorna a lista de carros.', async function () {
     sinon.stub(Model, 'find').resolves(findAllMock);
 
