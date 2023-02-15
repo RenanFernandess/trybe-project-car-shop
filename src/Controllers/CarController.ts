@@ -50,4 +50,13 @@ export default class CarController {
       return next(error);
     }
   }
+
+  public async delete({ params: { id } }: Request, res: Response, next: NextFunction) {
+    try {
+      await this._sevice.delete(id);
+      return res.status(204).send();
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
