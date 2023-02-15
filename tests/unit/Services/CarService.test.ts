@@ -105,6 +105,15 @@ describe('Testa a CarService', function () {
     },
   );
 
+  it('Verifica se update retorna o carro no fomato correto.', async function () {
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(findByIdMock);
+
+    const result = await new CarService().update(findByIdMock.id, findByIdMock);
+
+    expect(result).to.be.has.all.keys(carAttributes);
+    expect(result).to.be.deep.equal(findByIdMock);
+  });
+
   it('Verifica se o createCarDomian retorna null caso receba null ou undefined', async function () {
     sinon.stub(Model, 'create').resolves(null);
 
