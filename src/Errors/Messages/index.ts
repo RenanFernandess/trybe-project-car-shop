@@ -1,7 +1,7 @@
 const NOT_FOUND = {
   status: 404,
-  INVALID_ID: 'Wrong id format',
-  CAR_NOT_FOUND: 'Car not found',
+  CAR: 'Car not found',
+  MOTORCYCLE: 'Motorcycle not found',
 };
 
 export default NOT_FOUND;
