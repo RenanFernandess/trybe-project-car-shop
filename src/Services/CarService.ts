@@ -30,4 +30,10 @@ export default class CarService {
     if (!car) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
     return this._createCarDomian(car);
   }
+
+  public async update(id: string, car: Omit<ICar, 'id'>) {
+    const updateCar = await this._model.update(id, car);
+    if (!updateCar) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
+    return this._createCarDomian(updateCar);
+  }
 }
