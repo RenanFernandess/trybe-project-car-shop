@@ -114,6 +114,21 @@ describe('Testa a CarService', function () {
     expect(result).to.be.deep.equal(findByIdMock);
   });
 
+  it(
+    `Verifica se update lança um error com status 422 e message "Invalid mongo id",
+     caso o formato do Id seja invalido.`,
+    async function () {
+      sinon.stub(Model, 'findByIdAndUpdate').resolves(null);
+
+      try {
+        await new CarService().update('invalidId', carBodyMock);
+      } catch (error) {
+        expect((error as HttpError).status).to.be.equal(422);
+        expect((error as HttpError).message).to.be.equal('Invalid mongo id');
+      }
+    },
+  );
+
   it('Verifica se o createCarDomian retorna null caso receba null ou undefined', async function () {
     sinon.stub(Model, 'create').resolves(null);
 
