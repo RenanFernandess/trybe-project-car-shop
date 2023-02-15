@@ -1,6 +1,6 @@
 import ICar from '../Interfaces';
-import CarODM from '../Models/CarODM';
-import Car from '../Domains/Car';
+import CarODM from '../Models';
+import Car from '../Domains';
 import HttpError from '../Errors';
 import NOT_FOUND from '../Errors/Messages';
 
@@ -21,24 +21,24 @@ export default class CarService {
 
   public async findAll() {
     const cars = await this._model.findAll();
-    if (!cars.length) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
+    if (!cars.length) throw new HttpError(404, NOT_FOUND.CAR);
     return cars.map((car) => this._createCarDomian(car));
   }
 
   public async findById(id: string) {
     const car = await this._model.findById(id);
-    if (!car) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
+    if (!car) throw new HttpError(404, NOT_FOUND.CAR);
     return this._createCarDomian(car);
   }
 
   public async update(id: string, car: Omit<ICar, 'id'>) {
     const updateCar = await this._model.update(id, car);
-    if (!updateCar) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
+    if (!updateCar) throw new HttpError(404, NOT_FOUND.CAR);
     return this._createCarDomian(updateCar);
   }
 
   public async delete(id: string) {
     const deletedCar = await this._model.delete(id);
-    if (!deletedCar) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
+    if (!deletedCar) throw new HttpError(404, NOT_FOUND.CAR);
   }
 }
