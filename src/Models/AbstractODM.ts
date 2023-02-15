@@ -9,7 +9,7 @@ import {
 import HttpError from '../Errors';
 import { UNPROCESSABLE_ENTITY } from '../Errors/Messages';
 
-export default abstract class Vehicle<T> {
+export default abstract class AbstractODM<T> {
   protected model: Model<T>;
 
   constructor(
