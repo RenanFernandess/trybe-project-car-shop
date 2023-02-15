@@ -36,4 +36,9 @@ export default class CarService {
     if (!updateCar) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
     return this._createCarDomian(updateCar);
   }
+
+  public async delete(id: string) {
+    const deletedCar = await this._model.delete(id);
+    if (!deletedCar) throw new HttpError(404, NOT_FOUND.CAR_NOT_FOUND);
+  }
 }
