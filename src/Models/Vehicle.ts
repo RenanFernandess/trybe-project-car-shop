@@ -33,12 +33,17 @@ export default abstract class Vehicle<T> {
     );
   }
 
+  public delete(id: string) {
+    if (!isValidObjectId(id)) throw new HttpError(422, UNPROCESSABLE_ENTITY.MONGO_ID);
+    return this.model.findByIdAndDelete(id);
+  }
+
   public findAll() {
     return this.model.find();
   }
 
-  public findById(_id: string) {
-    if (!isValidObjectId(_id)) throw new HttpError(422, UNPROCESSABLE_ENTITY.MONGO_ID);
-    return this.model.findById(_id);
+  public findById(id: string) {
+    if (!isValidObjectId(id)) throw new HttpError(422, UNPROCESSABLE_ENTITY.MONGO_ID);
+    return this.model.findById(id);
   }
 }
