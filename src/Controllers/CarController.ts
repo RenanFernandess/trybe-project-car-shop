@@ -37,4 +37,17 @@ export default class CarController {
       return next(error);
     }
   }
+
+  public async update({ params: { id }, body }: Request, res: Response, next: NextFunction) {
+    const { model, year, color, status, buyValue, doorsQty, seatsQty } = body;
+    try {
+      const updatedCar = await this._sevice.update(
+        id,
+        { model, year, color, status, buyValue, doorsQty, seatsQty },
+      );
+      return res.status(200).json(updatedCar);
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
